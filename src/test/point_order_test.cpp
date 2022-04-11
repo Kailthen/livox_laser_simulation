@@ -65,13 +65,13 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < split_num && ros::ok(); ++i) {
         for (int j = 0; j < split_size; ++j) {
             int ind = i * split_size + j;
-            gazebo::math::Quaternion ray;
-            ray.SetFromEuler(gazebo::math::Vector3(0.0, avia_data[ind].zenith, avia_data[ind].azimuth));
-            auto axis = ray * gazebo::math::Vector3(1.0, 0.0, 0.0);
+            ignition::math::Quaterniond  ray;
+            ray.Euler(ignition::math::Vector3(0.0, avia_data[ind].zenith, avia_data[ind].azimuth));
+            auto axis = ray * ignition::math::Vector3(1.0, 0.0, 0.0);
             auto point = r * axis;
-            tmp.x = point.x;
-            tmp.y = point.y;
-            tmp.z = point.z;
+            tmp.x = point.X();
+            tmp.y = point.Y();
+            tmp.z = point.Z();
             points.push_back(tmp);
         }
         sensor_msgs::PointCloud2 points_msg;

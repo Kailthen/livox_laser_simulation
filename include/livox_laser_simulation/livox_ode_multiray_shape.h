@@ -4,12 +4,13 @@
 
 #ifndef SRC_GAZEBO_LIVOX_ODE_MULTIRAY_SHAPE_H
 #define SRC_GAZEBO_LIVOX_ODE_MULTIRAY_SHAPE_H
-#include <ode/common.h>
+#include <gazebo/ode/common.h>
 #include <gazebo/physics/MultiRayShape.hh>
 #include <gazebo/util/system.hh>
 
 namespace gazebo {
 namespace physics {
+
 class GZ_PHYSICS_VISIBLE LivoxOdeMultiRayShape : public MultiRayShape {
     /// \brief Constructor.
     /// \param[in] _parent Parent Collision.
@@ -40,7 +41,7 @@ class GZ_PHYSICS_VISIBLE LivoxOdeMultiRayShape : public MultiRayShape {
     /// \param[in] _start Start of a ray.
     /// \param[in] _end End of a ray.
  public:
-    void AddRay(const math::Vector3 &_start, const math::Vector3 &_end);
+    void AddRay(const ignition::math::Vector3<double> &_start, const ignition::math::Vector3<double> &_end);
 
     double GetRange(unsigned int _index);
 

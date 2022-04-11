@@ -47,7 +47,7 @@ LivoxOdeMultiRayShape::~LivoxOdeMultiRayShape() {
 
 //////////////////////////////////////////////////
 void LivoxOdeMultiRayShape::UpdateRays() {
-    ODEPhysicsPtr ode = boost::dynamic_pointer_cast<ODEPhysics>(this->GetWorld()->GetPhysicsEngine());
+    ODEPhysicsPtr ode = boost::dynamic_pointer_cast<ODEPhysics>(this->GetWorld()->Physics());
 
     if (ode == NULL) gzthrow("Invalid physics engine. Must use ODE.");
 
@@ -126,9 +126,9 @@ void LivoxOdeMultiRayShape::UpdateCallback(void *_data, dGeomID _o1, dGeomID _o2
                     //        << ", " << contact.pos[2]
                     //        << ", " << "]"
                     //      << " ray[" << rayCollision->GetScopedName() << "]"
-                    //      << " pose[" << rayCollision->GetWorldPose() << "]"
+                    //      << " pose[" << rayCollision->WorldPose() << "]"
                     //      << " hit[" << hitCollision->GetScopedName() << "]"
-                    //      << " pose[" << hitCollision->GetWorldPose() << "]"
+                    //      << " pose[" << hitCollision->WorldPose() << "]"
                     //      << "\n";
                     shape->SetLength(contact.depth);
                     shape->SetRetro(hitCollision->GetLaserRetro());
@@ -139,7 +139,8 @@ void LivoxOdeMultiRayShape::UpdateCallback(void *_data, dGeomID _o1, dGeomID _o2
 }
 
 //////////////////////////////////////////////////
-void LivoxOdeMultiRayShape::AddRay(const math::Vector3 &_start, const math::Vector3 &_end) {
+void LivoxOdeMultiRayShape::AddRay(const ignition::math::Vector3<double> &_start, 
+        const ignition::math::Vector3<double> &_end) {
     MultiRayShape::AddRay(_start, _end);
 
     ODECollisionPtr odeCollision(new ODECollision(this->collisionParent->GetLink()));
@@ -153,9 +154,9 @@ void LivoxOdeMultiRayShape::AddRay(const math::Vector3 &_start, const math::Vect
     this->rays.push_back(ray);
 }
 void LivoxOdeMultiRayShape::Init() {
-    math::Vector3 start, end, axis;
+    ignition::math::Vector3<double> start, end, axis;
     double yawAngle, pitchAngle;
-    math::Quaternion ray;
+    ignition::math::Quaterniond  ray;
     double yDiff;
     double horzMinAngle, horzMaxAngle;
     int horzSamples = 1;
@@ -191,7 +192,7 @@ void LivoxOdeMultiRayShape::Init() {
     minRange = this->rangeElem->Get<double>("min");
     maxRange = this->rangeElem->Get<double>("max");
 
-    //    this->offset = this->collisionParent->GetRelativePose();
+    //    this->offset = this->collisionParent->RelativePose();
 
     // Create an array of ray collisions
     //    for (unsigned int j = 0; j < (unsigned int)vertSamples; ++j)
@@ -206,8 +207,8 @@ void LivoxOdeMultiRayShape::Init() {
     //
     //            // since we're rotating a unit x vector, a pitch rotation will now be
     //            // around the negative y axis
-    //            ray.SetFromEuler(math::Vector3(0.0, -pitchAngle, yawAngle));
-    //            axis = this->offset.rot * ray * math::Vector3(1.0, 0.0, 0.0);
+    //            ray.Euler(math::Vector3(0.0, -pitchAngle, yawAngle));
+    //            axis = this->offset.rot * ray * ignition::math::Vector3d(1.0, 0.0, 0.0);
     //
     //            start = (axis * minRange) + this->offset.pos;
     //            end = (axis * maxRange) + this->offset.pos;

@@ -17,8 +17,8 @@ namespace pcl{
 struct LivoxPointXyzrtl{
   PCL_ADD_POINT4D;
   float reflectivity; /**< Reflectivity   */
-  uint8_t tag;        /**< Livox point tag   */
-  uint8_t line;       /**< Laser line id     */
+  std::uint8_t tag;        /**< Livox point tag   */
+  std::uint8_t line;       /**< Laser line id     */
   EIGEN_ALIGN16;
 };
 
@@ -29,8 +29,8 @@ POINT_CLOUD_REGISTER_POINT_STRUCT (LivoxPointXyzrtl,
                                    (float, y, y)
                                    (float, z, z)
                                    (float, reflectivity, reflectivity)
-                                   (uint8_t, tag, tag)
-                                   (uint8_t, line, line)
+                                   (std::uint8_t, tag, tag)
+                                   (std::uint8_t, line, line)
 )
 
 #endif

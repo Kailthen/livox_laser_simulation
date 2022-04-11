@@ -57,12 +57,12 @@
         <topic>"/livox/imu"</topic>
         <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
           <topicName>/livox/imu</topicName>
-          <bodyName>imu_link</bodyName>
+          <bodyName>${name}_imu_link</bodyName>
           <updateRateHZ>10.0</updateRateHZ>
           <xyzOffset>0 0 0</xyzOffset>
           <gaussianNoise>0.0026399240948208127</gaussianNoise>
           <rpyOffset>0 0 0</rpyOffset>
-          <frameName>imu_link</frameName>
+          <frameName>${name}_imu_link</frameName>
           <initialOrientationAsReference>false</initialOrientationAsReference>
         </plugin>
         <pose>0.05512, 0.02226, -0.0297 0 0 0</pose>

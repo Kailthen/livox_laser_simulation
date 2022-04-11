@@ -1,15 +1,21 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="gui" default="true" />
   <arg name="world" default="$(find livox_laser_simulation)/worlds/standardrobots_factory.world" />
-  <arg name="robot" default="$(find livox_laser_simulation)/urdf/robot.xacro" />
+  <arg name="model" default="$(find livox_laser_simulation)/urdf/robot.xacro" />
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-	<arg name="world_name" value="$(arg world)"/> <arg name="paused" 
-	value="false"/> <arg name="use_sim_time" value="true"/> <arg 
-	name="gui" value="true"/> <arg name="headless" value="false"/> <arg 
-	name="debug" value="false"/> <arg name="verbose" value="true"/>
+	  <arg name="world_name" value="$(arg world)"/> 
+    <arg name="paused" value="false"/> 
+    <arg name="use_sim_time" value="false"/> 
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/> 
+    <arg name="debug" value="false"/> 
+    <arg name="verbose" value="true"/>
   </include>
-  
-  <param name="sensor_description" command="$(find xacro)/xacro --inorder $(arg robot)" />
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model livox_lidar -param sensor_description" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -x 0 -y -0 -z 0.5 -model livox_lidar -param robot_description" />
+
 </launch>
